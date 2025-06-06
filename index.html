@@ -417,87 +417,88 @@
         }
 
 
+
+
     ];
+
+
+ 
     const searchInput = document.querySelector('.search-bar input');
     const searchButton = document.querySelector('.search-bar button');
 
-    searchButton.addEventListener('click', function() {
-        const query = searchInput.value.toLowerCase();
-        const results = facilities.filter(facility =>
-            facility.name.toLowerCase().includes(query) ||
-            facility.type.toLowerCase().includes(query) ||
-            facility.services.toLowerCase().includes(query)
-        );
+    searchButton.addEventListener('click', function () {
+        try {
+            const query = searchInput.value.toLowerCase();
+            const results = facilities.filter(facility =>
+                facility.name.toLowerCase().includes(query) ||
+                facility.type.toLowerCase().includes(query) ||
+                facility.services.toLowerCase().includes(query)
+            );
 
-        // Remove old results and map
-        const existingResults = document.getElementById('search-results');
-        if (existingResults) existingResults.remove();
-        const existingMap = document.getElementById('map');
-        if (existingMap) existingMap.remove();
+            // Clean up previous results/map
+            document.getElementById('search-results')?.remove();
+            document.getElementById('map')?.remove();
 
-        // Create results container
-        const resultsDiv = document.createElement('div');
-        resultsDiv.id = 'search-results';
-        resultsDiv.style.margin = "20px";
-        resultsDiv.style.backgroundColor = "#F8F9FA";
-        resultsDiv.style.padding = "20px";
-        resultsDiv.style.borderRadius = "8px";
+            // Create result and map containers
+            const resultsDiv = document.createElement('div');
+            resultsDiv.id = 'search-results';
+            resultsDiv.style.margin = "20px";
+            resultsDiv.style.backgroundColor = "#F8F9FA";
+            resultsDiv.style.padding = "20px";
+            resultsDiv.style.borderRadius = "8px";
 
-        // Create map container
-        const mapDiv = document.createElement('div');
-        mapDiv.id = 'map';
-        mapDiv.style.height = "400px";
-        mapDiv.style.marginTop = "20px";
+            const mapDiv = document.createElement('div');
+            mapDiv.id = 'map';
+            mapDiv.style.height = "400px";
+            mapDiv.style.marginTop = "20px";
 
-        if (results.length > 0) {
-            results.forEach(facility => {
-                const info = document.createElement('div');
-                info.innerHTML = `
-                    <h3>${facility.name} (${facility.type})</h3>
-                    <p><strong>Contact:</strong> ${facility.contact}</p>
-                    <p><strong>Hours:</strong> ${facility.hours}</p>
-                    <p><strong>Services:</strong> ${facility.services}</p>
-                    <hr>
-                `;
-                resultsDiv.appendChild(info);
-            });
-        } else {
-            resultsDiv.textContent = "No matching facilities found.";
-        }
+            if (results.length > 0) {
+                results.forEach(facility => {
+                    const info = document.createElement('div');
+                    info.innerHTML = `
+                        <h3>${facility.name} (${facility.type})</h3>
+                        <p><strong>Contact:</strong> ${facility.contact}</p>
+                        <p><strong>Hours:</strong> ${facility.hours}</p>
+                        <p><strong>Services:</strong> ${facility.services}</p>
+                        <hr>
+                    `;
+                    resultsDiv.appendChild(info);
+                });
+            } else {
+                resultsDiv.textContent = "No matching facilities found.";
+            }
 
-        document.body.insertBefore(resultsDiv, document.querySelector('main'));
-        document.body.insertBefore(mapDiv, document.querySelector('main'));
+            document.body.insertBefore(resultsDiv, document.querySelector('main'));
+            document.body.insertBefore(mapDiv, document.querySelector('main'));
 
-        if (results.length > 0) {
-            const map = L.map('map').setView([results[0].lat, results[0].lng], 10);
+            if (results.length > 0) {
+                try {
+                    const map = L.map('map').setView([results[0].lat, results[0].lng], 10);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
 
-            results.forEach(facility => {
-                L.marker([facility.lat, facility.lng])
-                    .addTo(map)
-                    .bindPopup(`<strong>${facility.name}</strong><br>${facility.services}`);
-            });
+                    results.forEach(facility => {
+                        L.marker([facility.lat, facility.lng])
+                            .addTo(map)
+                            .bindPopup(`<strong>${facility.name}</strong><br>${facility.services}`);
+                    });
+                } catch (mapError) {
+                    console.error("Map rendering error:", mapError);
+                    const errorNote = document.createElement('p');
+                    errorNote.style.color = "red";
+                    errorNote.textContent = "Map could not be loaded. Please try again.";
+                    mapDiv.appendChild(errorNote);
+                }
+            }
+        } catch (error) {
+            console.error("Search operation failed:", error);
+            alert("An error occurred while searching. Please try again.");
         }
     });
 
-    let currentIndex = 0;
-    const slides = document.querySelectorAll('.slideshow img');
-
-    const showSlide = (index) => {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-      });
-    };
-
-    const nextSlide = () => {
-      currentIndex = (currentIndex + 1) % slides.length;
-      showSlide(currentIndex);
-    };
-
-    setInterval(nextSlide, 3000); // Change image every 3 seconds
-  </script>
+    
+</script>
 </body>
 </html>
