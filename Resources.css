@@ -59,7 +59,7 @@ main {
   to { opacity: 1; transform: translateY(0); }
 }
 
- .footer {
+  .footer {
       background-color: #3498db;
       display: flex;
       align-items: center;
