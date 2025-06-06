@@ -469,10 +469,9 @@
                 resultsDiv.textContent = "No matching facilities found.";
             }
 
-           const container = document.querySelector('.main-content') || document.body;
-container.appendChild(resultsDiv);
-container.appendChild(mapDiv);
-          
+         document.body.insertBefore(resultsDiv, document.querySelector('main'));
+            document.body.insertBefore(mapDiv, document.querySelector('main'));
+
             if (results.length > 0) {
                 try {
                     const map = L.map('map').setView([results[0].lat, results[0].lng], 10);
