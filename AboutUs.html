@@ -675,6 +675,243 @@
       </div>
 
   <script>
+
+    const facilities = [
+       {
+            type: "Hospital",
+            name: "Johannesburg General Hospital",
+            contact: "011 123 4567",
+            hours: "24/7",
+            services: "Emergency, Surgery, Maternity",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Hospital",
+            name: "Cape Town City Hospital",
+            contact: "021 456 7890",
+            hours: "24/7",
+            services: "Emergency, ICU, Orthopedics",
+            lat: -33.9180,
+            lng: 18.4232
+        },
+        {
+            type: "Hospital",
+            name: "Pretoria Medical Center",
+            contact: "012 345 6789",
+            hours: "24/7",
+            services: "Surgery, Oncology",
+            lat: -25.7479,
+            lng: 28.2293
+        },
+        {
+            type: "Hospital",
+            name: "Durban Central Hospital",
+            contact: "031 345 6789",
+            hours: "24/7",
+            services: "Emergency, Neurology",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+
+        // Clinics
+        {
+            type: "Clinic",
+            name: "Cape Town Wellness Clinic",
+            contact: "021 987 6543",
+            hours: "8AM - 5PM",
+            services: "General Care, Vaccinations",
+            lat: -33.9249,
+            lng: 18.4241
+        },
+        {
+            type: "Clinic",
+            name: "Sandton Health Clinic",
+            contact: "011 555 1234",
+            hours: "7AM - 6PM",
+            services: "Family Medicine, Checkups",
+            lat: -26.1076,
+            lng: 28.0567
+        },
+        {
+            type: "Clinic",
+            name: "Durban North Medical Clinic",
+            contact: "031 555 6789",
+            hours: "8AM - 5PM",
+            services: "Women's Health, Vaccinations",
+            lat: -29.7740,
+            lng: 31.0511
+        },
+        {
+            type: "Clinic",
+            name: "Soweto Primary Clinic",
+            contact: "011 765 4321",
+            hours: "8AM - 4PM",
+            services: "Primary Care, Child Health",
+            lat: -26.2485,
+            lng: 27.8540
+        },
+
+        // Doctors
+        {
+            type: "Doctor",
+            name: "Dr. Sarah Johnson - Dermatologist",
+            contact: "021 555 1234",
+            hours: "9AM - 3PM",
+            services: "Skin Treatments",
+            lat: -33.9180,
+            lng: 18.4232
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Amanda Jacobs - Cardiologist",
+            contact: "011 456 7890",
+            hours: "8AM - 2PM",
+            services: "Heart Care, ECG Testing",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Yusuf Patel - Orthopedic Surgeon",
+            contact: "031 987 6543",
+            hours: "10AM - 4PM",
+            services: "Bone, Joint, Muscle Care",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Naledi Moeketsi - General Practitioner",
+            contact: "012 555 7890",
+            hours: "9AM - 5PM",
+            services: "General Health Consultations",
+            lat: -25.7479,
+            lng: 28.2293
+        },
+
+        // Specialists
+        {
+            type: "Specialist",
+            name: "Dr. James Lee - Pediatrician",
+            contact: "031 789 1234",
+            hours: "8AM - 4PM",
+            services: "Child Healthcare",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Louise Daniels - Neurologist",
+            contact: "021 321 4321",
+            hours: "9AM - 1PM",
+            services: "Brain & Nervous System",
+            lat: -33.9249,
+            lng: 18.4241
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Sipho Dlamini - Oncologist",
+            contact: "011 654 3210",
+            hours: "10AM - 3PM",
+            services: "Cancer Treatment",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Thandi Maseko - Endocrinologist",
+            contact: "031 432 1234",
+            hours: "8AM - 1PM",
+            services: "Hormone Disorders, Diabetes Care",
+            lat: -29.8587,
+            lng: 31.0218
+        }
+
+
+
+
+    ];
+
+
+ 
+    const searchInput = document.querySelector('.search-bar input');
+    const searchButton = document.querySelector('.search-bar button');
+
+    searchButton.addEventListener('click', function () {
+        try {
+            const query = searchInput.value.toLowerCase();
+            const results = facilities.filter(facility =>
+                facility.name.toLowerCase().includes(query) ||
+                facility.type.toLowerCase().includes(query) ||
+                facility.services.toLowerCase().includes(query)
+            );
+
+            // Clean up previous results/map
+            document.getElementById('search-results')?.remove();
+            document.getElementById('map')?.remove();
+
+            // Create result and map containers
+            const resultsDiv = document.createElement('div');
+            resultsDiv.id = 'search-results';
+            resultsDiv.style.margin = "20px";
+            resultsDiv.style.backgroundColor = "#F8F9FA";
+            resultsDiv.style.padding = "20px";
+            resultsDiv.style.borderRadius = "8px";
+
+            const mapDiv = document.createElement('div');
+            mapDiv.id = 'map';
+            mapDiv.style.height = "400px";
+            mapDiv.style.marginTop = "20px";
+
+            if (results.length > 0) {
+                results.forEach(facility => {
+                    const info = document.createElement('div');
+                    info.innerHTML = `
+                        <h3>${facility.name} (${facility.type})</h3>
+                        <p><strong>Contact:</strong> ${facility.contact}</p>
+                        <p><strong>Hours:</strong> ${facility.hours}</p>
+                        <p><strong>Services:</strong> ${facility.services}</p>
+                        <hr>
+                    `;
+                    resultsDiv.appendChild(info);
+                });
+            } else {
+                resultsDiv.textContent = "No matching facilities found.";
+            }
+
+            document.body.insertBefore(resultsDiv, document.querySelector('main'));
+            document.body.insertBefore(mapDiv, document.querySelector('main'));
+
+            if (results.length > 0) {
+                try {
+                    const map = L.map('map').setView([results[0].lat, results[0].lng], 10);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    results.forEach(facility => {
+                        L.marker([facility.lat, facility.lng])
+                            .addTo(map)
+                            .bindPopup(`<strong>${facility.name}</strong><br>${facility.services}`);
+                    });
+                } catch (mapError) {
+                    console.error("Map rendering error:", mapError);
+                    const errorNote = document.createElement('p');
+                    errorNote.style.color = "red";
+                    errorNote.textContent = "Map could not be loaded. Please try again.";
+                    mapDiv.appendChild(errorNote);
+                }
+            }
+        } catch (error) {
+            console.error("Search operation failed:", error);
+            alert("An error occurred while searching. Please try again.");
+        }
+    });
+
+
+    
     // Animated statistics counter
     function animateValue(id, start, end, duration) {
         const obj = document.getElementById(id);
