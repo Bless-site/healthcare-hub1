@@ -84,3 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+searchInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        searchButton.click();
+    }
+});
+
