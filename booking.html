@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment</title>
+  <style>
+    
+ 
+    
+  body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1d3f6e;
+      color: white;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+    }
+    
+      .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #3498db;
+      padding: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap; /* Allow items to wrap */
+    }
+
+    .navbar .logo img {
+      height: 50px; 
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center; /* Align items vertically */
+      gap: 10px;
+    }
+
+    .nav-links button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    /* Style for the search bar */
+    .search-bar {
+      display: flex;
+      align-items: center; /* Center vertically */
+    }
+
+    .search-bar input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px 0 0 5px; /* Rounded corners for the left side */
+    }
+
+    .search-bar button {
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0; /* Rounded corners for the right side */
+      cursor: pointer;
+    }
+
+    
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 768px) {
+      .navbar .nav-links {
+        flex-direction: column; /* Stack navigation items vertically */
+        width: 100%;
+        align-items: stretch; /* Stretch to full width */
+      }
+
+      
+      
+      .navbar {
+        flex-direction: column; /* Stack navbar items vertically */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar .logo img {
+        height: 40px; /* Reduce logo size */
+      }
+
+      .nav-links button {
+        padding: 8px; /* Reduce padding for buttons */
+      }
+
+      .search-bar input {
+        padding: 8px; /* Reduce padding for input */
+      }
+
+      .search-bar button {
+        padding: 8px; /* Reduce padding for button */
+      }
+    }
+  
+
+     
+      
+     
+
+    .footer {
+      background-color: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      flex-wrap: wrap; /* Allow wrapping */
+    }
+
+    .footer .copyright {
+      background-color: #2c3e50;
+      padding: 5px 10px;
+      color: white;
+      flex: 1; /* Allow copyright to take available space */
+      text-align: left; /* Align text to the left */
+    }
+
+    .footer .social-icons {
+      display: flex; /* Use flexbox for social icons */
+      align-items: center; /* Center icons vertically */
+    }
+
+    .footer .social-icons img {
+      width: 30px;
+      margin-left: 10px;
+    }
+    .title {
+        text-align: center;
+        color: #1d3557;
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+    .form-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+    .form-section {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-section h2 {
+        text-align: center;
+        color: #1d3557;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    label {
+        margin-bottom: 5px;
+        color: #1d3557;
+        font-weight: bold;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="time"],
+    select {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: none;
+        background-color: #0b5394;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    input::placeholder {
+        color: white;
+    }
+    input:focus,
+    select:focus {
+        outline: none;
+        background-color: #073763;
+    }
+    .invalid {
+        border: 2px solid red;
+    }
+    .submit-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+    button {
+        background-color: #0b5394;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #073763;
+    }
+    .radio-group {
+        margin-bottom: 15px;
+    }
+    .radio-group label {
+        margin-right: 15px;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    
+ .hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  color: rgb(205, 80, 7);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+    @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+    
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+          <img src="HealthcareHub.png" alt="Healthcare Access & Information Hub Logo">
+        </div>
+        <div class="nav-links">
+          <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+          </div>
+          <button><a href="index.html" style="color: white;">HOME</a></button>
+          <button><a href="Services.html" style="color: white;">SERVICES</a></button>
+      <button><a href="Resources.html" style="color: white;">RESOURCES</a></button>
+      <button><a href="AboutUs.html" style="color: white;"> ABOUT US</a></button>
+      <button><a href="contact.html"style="color: white;"> CONTACT US</a></button>
+        </div>
+      </div>
+<h1 class="title">BOOK APPOINTMENT</h1>
+
+<div class="form-container">
+  <div class="form-section">
+    <h2>Patient Information</h2>
+    <form id="appointment-form-left">
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" name="fullName" placeholder="Full Name" required>
+
+      <label for="last-name">Last Name</label>
+      <input type="text" id="last-name" name="lastName" placeholder="Last Name" required>
+
+      <label>Sex at Birth</label>
+      <div class="radio-group">
+        <label><input type="radio" name="sex" value="Male" required> Male</label>
+        <label><input type="radio" name="sex" value="Female" required> Female</label>
+      </div>
+
+      <label for="sa-id">SA ID Number</label>
+      <input type="text" id="sa-id" name="saId" placeholder="SA ID number" maxlength="13" required>
+
+      <label for="contact">Contact</label>
+      <input type="text" id="contact" name="contact" placeholder="Contact" maxlength="10" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Email Address" required>
+    </form>
+  </div>
+
+  <div class="form-section">
+    <h2>Appointment Information</h2>
+    <form id="appointment-form-right">
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Time</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="venue">Venue</label>
+      <div class="radio-group">
+        <label><input type="radio" name="venue" value="In Person" required> In Person</label>
+        <label><input type="radio" name="venue" value="Virtual" required> Virtual</label>
+        <label><input type="radio" name="venue" value="Telephonic" required> Telephonic</label>
+      </div>
+
+      <label for="doctor-type">Consultation Type</label>
+      <select id="doctor-type" name="doctorType" required>
+        <option value="" disabled selected>Select Consultation Type</option>
+        <option value="General Practitioner">General Practitioner</option>
+        <option value="Dentist">Dentist</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Pediatrician">Pediatrician</option>
+        <option value="Psychiatrist">Psychiatrist</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Orthopedist">Orthopedist</option>
+      </select>
+
+      <label for="preferred-doctor">Preferred Doctor</label>
+      <select id="preferred-doctor" name="preferredDoctor" multiple required>
+        <option value="" disabled>Select Preferred Doctors</option>
+      </select>
+
+      <label for="reason">Reason for Consultation</label>
+      <input type="text" id="reason" name="reason" placeholder="Reason for consultation" required>
+    </form>
+  </div>
+</div>
+
+<div class="submit-container">
+  <button onclick="submitForm()">Book Appointment</button>
+</div>
+
+<div id="confirmation-message"></div>
+
+<div class="footer">
+    <div class="copyright"><p>&copy; 2025 Healthcare Access & Information Hub. All rights reserved.</p></div>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/affinityhealthcoza/about/"><img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook"></a>
+      <a href="https://www.instagram.com/healthcareinc/"><img src="https://img.icons8.com/fluency/48/instagram-new.png" alt="Instagram"></a>
+      <a href="https://x.com/healthcareinc"><img src="https://img.icons8.com/ios-filled/50/x.png" alt="X"></a>
+      <a href="https://za.linkedin.com/company/universal-healthcare-sa"><img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"></a>
+    </div>
+  </div>
+<script>
+
+function submitForm() {
+  try {
+    const idNumber = document.getElementById('sa-id').value;
+    const contactNumber = document.getElementById('contact').value;
+
+    if (idNumber.length !== 13) {
+      alert("Please enter a valid 13-digit SA ID number.");
+      return;
+    }
+    if (contactNumber.length !== 10) {
+      alert("Please enter a valid 10-digit contact number.");
+      return;
+    }
+
+    const leftFormInputs = document.querySelectorAll('#appointment-form-left input');
+    const rightFormInputs = document.querySelectorAll('#appointment-form-right input, #appointment-form-right select');
+    const allInputs = [...leftFormInputs, ...rightFormInputs];
+    let allValid = true;
+
+    allInputs.forEach(input => {
+      input.style.border = 'none';
+    });
+
+    allInputs.forEach(input => {
+      if ((input.type === "radio" && !document.querySelector(`input[name="${input.name}"]:checked`)) ||
+          (input.type !== "radio" && (input.value.trim() === '' || input.value === null))) {
+        input.style.border = '2px solid red';
+        allValid = false;
+      }
+    });
+
+    if (!allValid) {
+      alert("Please fill in all the fields!");
+      return;
+    }
+
+    const userConfirmed = confirm("Are you sure you want to book this appointment?");
+    if (!userConfirmed) {
+      return;
+    }
+
+    const confirmationMessage = document.getElementById("confirmation-message");
+    confirmationMessage.textContent = "Your appointment has been successfully booked!";
+    confirmationMessage.style.color = "green";
+    confirmationMessage.style.fontSize = "18px";
+    confirmationMessage.style.textAlign = "center";
+    confirmationMessage.style.marginTop = "20px";
+
+    document.getElementById("appointment-form-left").reset();
+    document.getElementById("appointment-form-right").reset();
+
+    clearFormCookies(); // Optional: clear cookies after submission
+
+  } catch (error) {
+    console.error("An error occurred during appointment submission:", error);
+    alert("Something went wrong while booking your appointment. Please try again.");
+  }
+}
+
+
+
+
+// Updated submitForm
+function submitForm() {
+  const idNumber = document.getElementById('sa-id').value;
+  const contactNumber = document.getElementById('contact').value;
+
+  if (idNumber.length !== 13) {
+    alert("Please enter a valid 13-digit SA ID number.");
+    return;
+  }
+  if (contactNumber.length !== 10) {
+    alert("Please enter a valid 10-digit contact number.");
+    return;
+  }
+
+  const leftFormInputs = document.querySelectorAll('#appointment-form-left input');
+  const rightFormInputs = document.querySelectorAll('#appointment-form-right input, #appointment-form-right select');
+  const allInputs = [...leftFormInputs, ...rightFormInputs];
+  let allValid = true;
+
+  allInputs.forEach(input => {
+    input.style.border = 'none';
+  });
+
+  allInputs.forEach(input => {
+    if ((input.type === "radio" && !document.querySelector(`input[name="${input.name}"]:checked`)) ||
+        (input.type !== "radio" && (input.value.trim() === '' || input.value === null))) {
+      input.style.border = '2px solid red';
+      allValid = false;
+    }
+  });
+
+  if (!allValid) {
+    alert("Please fill in all the fields!");
+    return;
+  }
+
+  const userConfirmed = confirm("Are you sure you want to book this appointment?");
+  if (!userConfirmed) {
+    return;
+  }
+
+  const confirmationMessage = document.getElementById("confirmation-message");
+  confirmationMessage.textContent = "Your appointment has been successfully booked!";
+  confirmationMessage.style.color = "green";
+  confirmationMessage.style.fontSize = "18px";
+  confirmationMessage.style.textAlign = "center";
+  confirmationMessage.style.marginTop = "20px";
+
+  document.getElementById("appointment-form-left").reset();
+  document.getElementById("appointment-form-right").reset();
+}
+
+// Load and Save Cookies
+function saveFormData() {
+  const formElements = document.querySelectorAll('#appointment-form-left input, #appointment-form-right input, #appointment-form-right select');
+  formElements.forEach(input => {
+    if (input.type === 'radio') {
+      if (input.checked) {
+        document.cookie = `${encodeURIComponent(input.name)}=${encodeURIComponent(input.value)}; path=/;`;
+      }
+    } else {
+      document.cookie = `${encodeURIComponent(input.name)}=${encodeURIComponent(input.value)}; path=/;`;
+    }
+  });
+}
+
+function loadFormData() {
+  const cookies = document.cookie.split(';');
+  const cookieData = {};
+  cookies.forEach(cookie => {
+    const [name, value] = cookie.trim().split('=');
+    if (name && value) {
+      cookieData[decodeURIComponent(name)] = decodeURIComponent(value);
+    }
+  });
+
+  const formElements = document.querySelectorAll('#appointment-form-left input, #appointment-form-right input, #appointment-form-right select');
+  formElements.forEach(input => {
+    const savedValue = cookieData[input.name];
+    if (savedValue !== undefined) {
+      if (input.type === 'radio') {
+        if (input.value === savedValue) {
+          input.checked = true;
+        }
+      } else {
+        input.value = savedValue;
+      }
+    }
+  });
+}
+
+function attachInputListeners() {
+  const formElements = document.querySelectorAll('#appointment-form-left input, #appointment-form-right input, #appointment-form-right select');
+  formElements.forEach(input => {
+    input.addEventListener('change', saveFormData);
+  });
+}
+
+function clearFormCookies() {
+  const cookies = document.cookie.split(";");
+  for (let cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+  }
+}
+
+// Doctor Selection Update
+const doctorList = {
+  "General Practitioner": ["Dr. Smith", "Dr. Adams", "Dr. Lee"],
+  "Dentist": ["Dr. Green", "Dr. Brown", "Dr. White"],
+  "Dermatologist": ["Dr. Patel", "Dr. Davis", "Dr. Kumar"],
+  "Pediatrician": ["Dr. Johnson", "Dr. Walker", "Dr. Carter"],
+  "Psychiatrist": ["Dr. Moore", "Dr. Miller", "Dr. Harris"],
+  "Cardiologist": ["Dr. Collins", "Dr. Evans", "Dr. Baker"],
+  "Orthopedist": ["Dr. Clark", "Dr. Perez", "Dr. Turner"]
+};
+
+function updateDoctorList() {
+  const doctorType = document.getElementById('doctor-type').value;
+  const preferredDoctor = document.getElementById('preferred-doctor');
+  preferredDoctor.innerHTML = '<option value="" disabled>Select Preferred Doctors</option>';
+  if (doctorType && doctorList[doctorType]) {
+    doctorList[doctorType].forEach(doctor => {
+      const option = document.createElement('option');
+      option.value = doctor;
+      option.textContent = doctor;
+      preferredDoctor.appendChild(option);
+    });
+  }
+}
+
+document.getElementById('doctor-type').addEventListener('change', updateDoctorList);
+
+// When page loads
+window.onload = function() {
+  loadFormData();
+  attachInputListeners();
+};
+</script>
+
+</body>
+</html>

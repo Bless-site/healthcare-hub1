@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Healthcare Hub</title>
+  <link rel="stylesheet" href="contact.css" />
+</head>
+<body>
+  
+  <div class="navbar">
+    <div class="logo">
+      <img src="HealthcareHub.png" alt="Healthcare Access & Information Hub Logo">
+    </div>
+    <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links" id="navLinks">
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+      </div>
+     <button><a href="index.html" style="color: white;">HOME</a></button>
+      <button><a href="Services.html" style="color: white;">SERVICES</a></button>
+      <button><a href="booking.html" style="color: white;"> APPOINTMENT</a></button>
+    <button><a href="Resources.html" style="color: white;">RESOURCES</a></button>
+    <button><a href="AboutUs.html" style="color: white;"> ABOUT US</a></button>
+    </div>
+  </div>
+  <div class="container">
+    <h2>📬 Contact Us</h2>
+    <form id="contactForm">
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" required />
+      </div>
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" required />
+      </div>
+      <div>
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" />
+      </div>
+      <div>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required />
+      </div>
+      <div class="full-width">
+        <label for="reason">Reason for Contact</label>
+        <select id="reason" required>
+          <option value="">Select a reason...</option>
+          <option value="feedback">Feedback</option>
+          <option value="support">Technical Support</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="full-width">
+        <label for="message">Your Message</label>
+        <textarea id="message" rows="5" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+    <div id="formResponse" class="hidden"></div>
+  </div>
+  <div class="footer">
+    <div class="copyright"><p>&copy; 2025 Healthcare Access & Information Hub. All rights reserved.</p></div>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/affinityhealthcoza/about/"><img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook"></a>
+      <a href="https://www.instagram.com/healthcareinc/"><img src="https://img.icons8.com/fluency/48/instagram-new.png" alt="Instagram"></a>
+      <a href="https://x.com/healthcareinc"><img src="https://img.icons8.com/ios-filled/50/x.png" alt="X"></a>
+      <a href="https://za.linkedin.com/company/universal-healthcare-sa"><img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"></a>
+    </div>
+  </div>
+  <script src="contact.js"></script>
+</body>
+</html>

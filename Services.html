@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Access & Information Hub</title>
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet.js Script -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        :root {
+               --primary-blue: #007BFF;
+               --primary-green: #28A745;
+               --text-dark: #333333;
+               --text-light: #555555;
+               --bg-white: #FFFFFF;
+               --bg-light: #F8F9FA;
+               --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+           }
+
+       .navbar {
+         display: flex;
+         align-items: center;
+         background-color: #3498db;
+         padding: 10px;
+         justify-content: space-between;
+         flex-wrap: wrap; /* Allow items to wrap */
+       }
+
+       .navbar .logo img {
+         height: 50px;
+       }
+
+       .nav-links {
+         display: flex;
+         align-items: center; /* Align items vertically */
+         gap: 10px;
+       }
+
+       .nav-links button {
+         background-color: #2c3e50;
+         color: white;
+         border: none;
+         padding: 10px 15px;
+         cursor: pointer;
+       }
+
+       /* Style for the search bar */
+       .search-bar {
+         display: flex;
+         align-items: center; /* Center vertically */
+       }
+
+       .search-bar input {
+         padding: 10px;
+         border: none;
+         border-radius: 5px 0 0 5px; /* Rounded corners for the left side */
+       }
+
+       .search-bar button {
+         padding: 10px;
+         background-color: #2c3e50;
+         color: white;
+         border: none;
+         border-radius: 0 5px 5px 0; /* Rounded corners for the right side */
+         cursor: pointer;
+       }
+
+       /* Make the whole layout flexible */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Example container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Images and videos scale properly */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Small devices (phones) */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 601px) and (max-width: 991px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+
+/* Large devices (laptops/desktops) */
+@media (min-width: 992px) {
+  h1 {
+    font-size: 40px;
+  }
+}
+
+.footer {
+    background-color: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-wrap: wrap; /* Allow wrapping */
+  }
+
+  .footer .copyright {
+    background-color: #2c3e50;
+    padding: 5px 10px;
+    color: white;
+    flex: 1; /* Allow copyright to take available space */
+    text-align: left; /* Align text to the left */
+  }
+
+  .footer .social-icons {
+    display: flex; /* Use flexbox for social icons */
+    align-items: center; /* Center icons vertically */
+  }
+
+  .footer .social-icons img {
+    width: 30px;
+    margin-left: 10px;
+  }
+ .services-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .services-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #174873;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color:  #174873;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+          @media (max-width: 768px) {}
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+       /* Media Queries for responsiveness */
+       @media (max-width: 768px) {
+         .navbar .nav-links {
+           flex-direction: column; /* Stack navigation items vertically */
+           width: 100%;
+           align-items: stretch; /* Stretch to full width */
+         }
+
+         .columns-container {
+           flex-direction: column; /* Stack columns vertically */
+         }
+
+         .main-content .column {
+           width: 100%; /* Full width on small screens */
+           height: auto; /* Allow height to adjust */
+         }
+
+         .navbar {
+           flex-direction: column; /* Stack navbar items vertically */
+         }
+       }
+
+       @media (max-width: 480px) {
+         .navbar .logo img {
+           height: 40px; /* Reduce logo size */
+         }
+
+         .nav-links button {
+           padding: 8px; /* Reduce padding for buttons */
+         }
+
+         .search-bar input {
+           padding: 8px; /* Reduce padding for input */
+         }
+
+         .search-bar button {
+           padding: 8px; /* Reduce padding for button */
+         }
+
+       }
+
+       .button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2c3e50; /* blue */
+  color: white;
+  text-decoration: none; /* remove underline */
+  border-radius: 5px;
+}
+.button:hover {
+  background-color: #0056b3; /* darker blue on hover */
+}
+
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">
+        <img src="HealthcareHub.png" alt="Healthcare Access & Information Hub Logo">
+    </div>
+    <div class="nav-links">
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <button><a href="index.html" style="color: white;">HOME</a></button>
+        <button><a href="booking.html" style="color: white;">BOOKING</a></button>
+      <button><a href="Resources.html" style="color: white;">RESOURCES</a></button>
+      <button><a href="AboutUs.html" style="color: white;"> ABOUT US</a></button>
+      <button><a href="contact.html" style="color: white;"> CONTACT US</a></button>
+    </div>
+</div>
+
+<main>
+
+    <div class="services-container">
+
+        <h1 class="services-title">SERVICES OFFERED</h1>
+
+        <h4 class="services-title">Search for doctors,hospitals,clinics and specialists</h4>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>SERVICE 1: Healthcare Provider Directory</h3>
+                <p style="color:white;">A comprehensive directory listing hospitals, clinics, doctors, and specialists near you with their contact information, working hours, and available services.</p>
+                <p style="color: white;">Features interactive maps with Leaflet.js integration to help users locate nearby healthcare facilities.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>SERVICE 2: Telemedicine Services</h3>
+                <p style="color: White;">Remote medical consultations through video calls or chat interfaces with qualified healthcare professionals.</p>
+                <p style="color: White;">Includes appointment scheduling, follow-up consultations, and prescription services to avoid unnecessary physical visits.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>SERVICE 3: Appointment Scheduling</h3>
+                <p style="color: White;">Streamlined booking system for both in-person and virtual appointments with healthcare providers.</p>
+                <p style="color:White;">View availability, receive confirmation emails, and manage/cancel appointments through the platform.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>SERVICE 4: Health Education Resources</h3>
+                <p style="color: White;">Access to reliable information about common diseases, prevention methods, emergency procedures, and self-care knowledge.</p>
+                <p style="color: white;">Includes interactive symptom checker to help users determine appropriate healthcare actions.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div class="footer">
+  <div class="copyright"><p>&copy; 2025 Healthcare Access & Information Hub. All rights reserved.</p></div>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/affinityhealthcoza/about/"><img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook"></a>
+    <a href="https://www.instagram.com/healthcareinc/"><img src="https://img.icons8.com/fluency/48/instagram-new.png" alt="Instagram"></a>
+    <a href="https://x.com/healthcareinc"><img src="https://img.icons8.com/ios-filled/50/x.png" alt="X"></a>
+    <a href="https://za.linkedin.com/company/universal-healthcare-sa"><img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"></a>
+  </div>
+</div>
+
+</body>
+<script>
+    const facilities = [
+       {
+            type: "Hospital",
+            name: "Johannesburg General Hospital",
+            contact: "011 123 4567",
+            hours: "24/7",
+            services: "Emergency, Surgery, Maternity",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Hospital",
+            name: "Cape Town City Hospital",
+            contact: "021 456 7890",
+            hours: "24/7",
+            services: "Emergency, ICU, Orthopedics",
+            lat: -33.9180,
+            lng: 18.4232
+        },
+        {
+            type: "Hospital",
+            name: "Pretoria Medical Center",
+            contact: "012 345 6789",
+            hours: "24/7",
+            services: "Surgery, Oncology",
+            lat: -25.7479,
+            lng: 28.2293
+        },
+        {
+            type: "Hospital",
+            name: "Durban Central Hospital",
+            contact: "031 345 6789",
+            hours: "24/7",
+            services: "Emergency, Neurology",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+
+        // Clinics
+        {
+            type: "Clinic",
+            name: "Cape Town Wellness Clinic",
+            contact: "021 987 6543",
+            hours: "8AM - 5PM",
+            services: "General Care, Vaccinations",
+            lat: -33.9249,
+            lng: 18.4241
+        },
+        {
+            type: "Clinic",
+            name: "Sandton Health Clinic",
+            contact: "011 555 1234",
+            hours: "7AM - 6PM",
+            services: "Family Medicine, Checkups",
+            lat: -26.1076,
+            lng: 28.0567
+        },
+        {
+            type: "Clinic",
+            name: "Durban North Medical Clinic",
+            contact: "031 555 6789",
+            hours: "8AM - 5PM",
+            services: "Women's Health, Vaccinations",
+            lat: -29.7740,
+            lng: 31.0511
+        },
+        {
+            type: "Clinic",
+            name: "Soweto Primary Clinic",
+            contact: "011 765 4321",
+            hours: "8AM - 4PM",
+            services: "Primary Care, Child Health",
+            lat: -26.2485,
+            lng: 27.8540
+        },
+
+        // Doctors
+        {
+            type: "Doctor",
+            name: "Dr. Sarah Johnson - Dermatologist",
+            contact: "021 555 1234",
+            hours: "9AM - 3PM",
+            services: "Skin Treatments",
+            lat: -33.9180,
+            lng: 18.4232
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Amanda Jacobs - Cardiologist",
+            contact: "011 456 7890",
+            hours: "8AM - 2PM",
+            services: "Heart Care, ECG Testing",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Yusuf Patel - Orthopedic Surgeon",
+            contact: "031 987 6543",
+            hours: "10AM - 4PM",
+            services: "Bone, Joint, Muscle Care",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+        {
+            type: "Doctor",
+            name: "Dr. Naledi Moeketsi - General Practitioner",
+            contact: "012 555 7890",
+            hours: "9AM - 5PM",
+            services: "General Health Consultations",
+            lat: -25.7479,
+            lng: 28.2293
+        },
+
+        // Specialists
+        {
+            type: "Specialist",
+            name: "Dr. James Lee - Pediatrician",
+            contact: "031 789 1234",
+            hours: "8AM - 4PM",
+            services: "Child Healthcare",
+            lat: -29.8587,
+            lng: 31.0218
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Louise Daniels - Neurologist",
+            contact: "021 321 4321",
+            hours: "9AM - 1PM",
+            services: "Brain & Nervous System",
+            lat: -33.9249,
+            lng: 18.4241
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Sipho Dlamini - Oncologist",
+            contact: "011 654 3210",
+            hours: "10AM - 3PM",
+            services: "Cancer Treatment",
+            lat: -26.2041,
+            lng: 28.0473
+        },
+        {
+            type: "Specialist",
+            name: "Dr. Thandi Maseko - Endocrinologist",
+            contact: "031 432 1234",
+            hours: "8AM - 1PM",
+            services: "Hormone Disorders, Diabetes Care",
+            lat: -29.8587,
+            lng: 31.0218
+        }
+
+
+
+
+    ];
+
+
+ 
+    const searchInput = document.querySelector('.search-bar input');
+    const searchButton = document.querySelector('.search-bar button');
+
+    searchButton.addEventListener('click', function () {
+        try {
+            const query = searchInput.value.toLowerCase();
+            const results = facilities.filter(facility =>
+                facility.name.toLowerCase().includes(query) ||
+                facility.type.toLowerCase().includes(query) ||
+                facility.services.toLowerCase().includes(query)
+            );
+
+            // Clean up previous results/map
+            document.getElementById('search-results')?.remove();
+            document.getElementById('map')?.remove();
+
+            // Create result and map containers
+            const resultsDiv = document.createElement('div');
+            resultsDiv.id = 'search-results';
+            resultsDiv.style.margin = "20px";
+            resultsDiv.style.backgroundColor = "#F8F9FA";
+            resultsDiv.style.padding = "20px";
+            resultsDiv.style.borderRadius = "8px";
+
+            const mapDiv = document.createElement('div');
+            mapDiv.id = 'map';
+            mapDiv.style.height = "400px";
+            mapDiv.style.marginTop = "20px";
+
+            if (results.length > 0) {
+                results.forEach(facility => {
+                    const info = document.createElement('div');
+                    info.innerHTML = `
+                        <h3>${facility.name} (${facility.type})</h3>
+                        <p><strong>Contact:</strong> ${facility.contact}</p>
+                        <p><strong>Hours:</strong> ${facility.hours}</p>
+                        <p><strong>Services:</strong> ${facility.services}</p>
+                        <hr>
+                    `;
+                    resultsDiv.appendChild(info);
+                });
+            } else {
+                resultsDiv.textContent = "No matching facilities found.";
+            }
+
+            document.body.insertBefore(resultsDiv, document.querySelector('main'));
+            document.body.insertBefore(mapDiv, document.querySelector('main'));
+
+            if (results.length > 0) {
+                try {
+                    const map = L.map('map').setView([results[0].lat, results[0].lng], 10);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    results.forEach(facility => {
+                        L.marker([facility.lat, facility.lng])
+                            .addTo(map)
+                            .bindPopup(`<strong>${facility.name}</strong><br>${facility.services}`);
+                    });
+                } catch (mapError) {
+                    console.error("Map rendering error:", mapError);
+                    const errorNote = document.createElement('p');
+                    errorNote.style.color = "red";
+                    errorNote.textContent = "Map could not be loaded. Please try again.";
+                    mapDiv.appendChild(errorNote);
+                }
+            }
+        } catch (error) {
+            console.error("Search operation failed:", error);
+            alert("An error occurred while searching. Please try again.");
+        }
+    });
+
+    
+</script>
+</html>

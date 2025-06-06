@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Telemedicine Guides</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; background: #fefefe; color: #333; }
+    h1 { color: #003366; }
+    .content { max-width: 800px; margin: auto; }
+    h2 { color: #007BFF; }
+    p { line-height: 1.6; }
+    .hamburger {
+    display: none;
+    font-size: 28px;
+    background: none;
+    color: rgb(46, 31, 127);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+  
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: #2c3e50;
+      width: 100%;
+     
+    
+     
+      z-index: 1000;
+      padding: 10px;
+    }
+  
+    .nav-links.show {
+      display: flex;
+    }
+  
+    .search-bar {
+      margin-bottom: 10px;
+    }
+  }
+  /* 💻 Laptops and Desktops (769px and up) */
+@media (min-width: 769px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+ .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #3498db;
+      padding: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap; /* Allow items to wrap */
+    }
+
+    .navbar .logo img {
+      height: 50px; 
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center; /* Align items vertically */
+      gap: 3px;
+    }
+    
+
+    .nav-links button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    /* Style for the search bar */
+    .search-bar {
+      display: flex;
+      align-items: center; /* Center vertically */
+    }
+
+    .search-bar input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px 0 0 5px; /* Rounded corners for the left side */
+    }
+
+    .search-bar button {
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0; /* Rounded corners for the right side */
+      cursor: pointer;
+    }
+  }
+  </style>
+</head>
+<header>
+  <h1>💻 Telemedicine Guides</h1>
+  <div class="navbar">
+    <div class="logo">
+      <img src="HealthcareHub.png" alt="Healthcare Access & Information Hub Logo">
+    </div>
+    <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links" id="navLinks">
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+      </div>
+  <button><a href="index.html" style="color: white;">HOME</a></button>
+      <button><a href="Services.html" style="color: white;">SERVICES</a></button>
+      <button><a href="booking.html" style="color: white;"> APPOINTMENT</a></button>
+    <button><a href="Resources.html" style="color: white;">RESOURCES</a></button>
+    <button><a href="AboutUs.html" style="color: white;"> ABOUT US</a></button>
+    <button><a href="contact.html" style="color: white;">CONTACT US</a></button>
+    </div>
+  </div>
+</header>
+<body>
+  <div class="content">
+    
+    <h2>How to Use Telemedicine</h2>
+    <p>Telemedicine connects patients with healthcare professionals via video or chat. This allows for convenient consultations from your home.</p>
+    <h2>Steps for a Successful Tele-Consultation</h2>
+    <ol>
+      
+      <li>Choose a doctor and available time slot.</li>
+      <li>Check that your internet and webcam are working properly.</li>
+      <li>Describe your symptoms in detail and upload any relevant reports.</li>
+      <li>Attend the consultation on time and follow the doctor's advice.</li>
+    </ol>
+    <p>Always ensure privacy and a quiet environment during your appointment.</p>
+  </div>
+  <script> document.getElementById('hamburgerMenu').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('show');
+  });</script>
+</body>
+</html>
